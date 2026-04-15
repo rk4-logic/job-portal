@@ -48,7 +48,7 @@ const teamsizeOptions = [
 
 const EmployerSettingForm = ({ initialData }: Props) => {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<EmployerProfileData>({
+    const { register, handleSubmit, control, formState: { errors, isDirty, isSubmitting } } = useForm<EmployerProfileData>({
         defaultValues: {
             name: initialData?.name || "",
             description: initialData?.description || "",
@@ -230,9 +230,10 @@ const EmployerSettingForm = ({ initialData }: Props) => {
                         )}
                     </div>
 
-                    <Button type="submit" className="bg-primary cursor-pointer text-white px-4 py-2 rounded-md">
-                        Save Changes
+                    <Button disabled={isSubmitting || !isDirty} type="submit" className="bg-primary cursor-pointer text-white px-4 py-2 rounded-md">
+                       {isSubmitting ? "Saving..." : "Save Changes"}
                     </Button>
+                    {!isDirty && <p className="text-sm text-muted-foreground">No changes to save</p>}
                 </form>
             </CardContent>
         </Card>
