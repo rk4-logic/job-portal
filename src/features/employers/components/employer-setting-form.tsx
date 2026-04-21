@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EmployerProfileData, employerProfileSchema } from "../employers.schema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Tiptap from "@/components/text-editor";
 
 const organizationTypeOptions = [
     "development",
@@ -89,13 +90,32 @@ const EmployerSettingForm = ({ initialData }: Props) => {
 
                     {/* Company Description */}
 
-                    <div className="space-y-3">
+                    {/* <div className="space-y-3">
                         <Label htmlFor="companyDescription">Company Description</Label>
                         <div className="relative">
                             <FileText className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
                             <Textarea id="companyDescription" className="pl-10" {...register("description", { required: "Company Description is required" })} />
                             {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                         </div>
+                    </div> */}
+
+                    <div className="space-y-2">
+                        <Controller
+                            name="description"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <div className="space-y-2">
+                                    <Label>Description *</Label>
+                                    <Tiptap content={field.value} onChange={field.onChange} />
+
+                                    {fieldState.error && (
+                                        <p className="text-sm text-destructive">
+                                            {fieldState.error.message}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -231,7 +251,7 @@ const EmployerSettingForm = ({ initialData }: Props) => {
                     </div>
 
                     <Button disabled={isSubmitting || !isDirty} type="submit" className="bg-primary cursor-pointer text-white px-4 py-2 rounded-md">
-                       {isSubmitting ? "Saving..." : "Save Changes"}
+                        {isSubmitting ? "Saving..." : "Save Changes"}
                     </Button>
                     {!isDirty && <p className="text-sm text-muted-foreground">No changes to save</p>}
                 </form>
