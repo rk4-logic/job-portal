@@ -15,6 +15,20 @@
       "when": 1772084231627,
       "tag": "0001_big_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1777369707835,
+      "tag": "0002_high_zzzax",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1777370977395,
+      "tag": "0003_happy_thunderbolt_ross",
+      "breakpoints": true
     }
   ]
 }

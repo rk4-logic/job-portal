@@ -65,7 +65,7 @@ interface IFormInput {
     websiteUrl: string;
     organizationType: OrganizationType;
     teamSize: TeamSize;
-    // avatarUrl: string;
+    avatarUrl: string;
     // bannerImageUrl: string;
 }
 

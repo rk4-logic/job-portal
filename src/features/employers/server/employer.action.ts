@@ -20,7 +20,7 @@ try {
       websiteUrl,
       organizationType,
       teamSize,
-      // avatarUrl,
+      avatarUrl,
       // bannerImageUrl,
     } = data;
 

@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { int, mysqlTable, timestamp, text,varchar, mysqlEnum, date, datetime, year } from 'drizzle-orm/mysql-core';
+import { int, mysqlTable, timestamp, text,varchar, mysqlEnum, datetime, year } from 'drizzle-orm/mysql-core';
 
 export const users = mysqlTable('users', {
     id: int('id').autoincrement().primaryKey(),
@@ -9,6 +9,7 @@ export const users = mysqlTable('users', {
     email: varchar("email", { length: 255 }).notNull().unique(),
     role: mysqlEnum("role", ["admin", "applicant", "employer"]).default("applicant").notNull(),
     phoneNumber: varchar("phone_number", { length: 255 }),
+    avatarUrl: text("avatar_url"),
     deletedAt: timestamp("deleted_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

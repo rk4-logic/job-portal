@@ -9,7 +9,7 @@ const EmployerSettings = async () => {
     const employer = await getCurrentEmployerDetails();
     if (!employer) return redirect("/login");
 
-    console.log("Employer Settings - Current Employer Details:", employer.email);
+    // console.log("Employer Settings - Current Employer Details:", employer.email);
 
     return <div>
         <EmployerSettingForm
@@ -23,7 +23,7 @@ const EmployerSettings = async () => {
                     websiteUrl: employer.employerDetails.websiteUrl,
                     yearOfEstablishment:
                         employer.employerDetails.yearOfEstablishment?.toString(),
-                    // avatarUrl: employer.avatarUrl,
+                    avatarUrl: employer.avatarUrl,
                     // bannerImageUrl: employer.bannerImageUrl,
                 } as EmployerProfileData
             }

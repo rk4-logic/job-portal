@@ -18,7 +18,7 @@ export const getCurrentEmployerDetails = async () => {
     employer.description &&
     employer.yearOfEstablishment &&
     employer.organizationType;                                                            
-    // currentUser.avatarUrl;
+    currentUser.avatarUrl; 
 
     return {...currentUser, employerDetails:employer, isProfileCompleted};
 };

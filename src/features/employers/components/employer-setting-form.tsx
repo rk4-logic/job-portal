@@ -2,9 +2,8 @@
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, Watch } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Briefcase, Building2, Calendar, FileText, Globe, MapPin } from "lucide-react";
 import { updateEmployerProfileAction } from "../server/employer.action";
@@ -13,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EmployerProfileData, employerProfileSchema } from "../employers.schema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Tiptap from "@/components/text-editor";
+import { UploadButton } from "@/lib/uploadthing";
+import Image from "next/image";
 
 const organizationTypeOptions = [
     "development",
@@ -49,7 +50,7 @@ const teamsizeOptions = [
 
 const EmployerSettingForm = ({ initialData }: Props) => {
 
-    const { register, handleSubmit, control, formState: { errors, isDirty, isSubmitting } } = useForm<EmployerProfileData>({
+    const { register, handleSubmit, control, setValue, watch,formState: { errors, isDirty, isSubmitting } } = useForm<EmployerProfileData>({
         defaultValues: {
             name: initialData?.name || "",
             description: initialData?.description || "",
@@ -58,11 +59,18 @@ const EmployerSettingForm = ({ initialData }: Props) => {
             location: initialData?.location || "",
             websiteUrl: initialData?.websiteUrl || "",
             yearOfEstablishment: initialData?.yearOfEstablishment,
-            // avatarUrl: initialData?.avatarUrl || "",
+            avatarUrl: initialData?.avatarUrl || "",
             // bannerImageUrl: initialData?.bannerImageUrl || "",
         },
         resolver: zodResolver(employerProfileSchema),
     });
+
+    const avatarUrl = watch("avatarUrl");
+
+    const handleRemoveAvatar = () => {
+      setValue("avatarUrl", ""); //Programmatically update a form field’s value inside react-hook-form.
+    };
+
 
     const handleFormSubmit = async (data: EmployerProfileData) => {
         console.log("Form Data:", data);
@@ -78,6 +86,103 @@ const EmployerSettingForm = ({ initialData }: Props) => {
         <Card className="w-3/4">
             <CardContent>
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 md:space-y-6">
+
+                    <Label>Company Logo</Label>
+                    {avatarUrl ? (
+                        <div className="flex items-center gap-4">
+                            <div className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-border">
+                                <Image
+                                    src={avatarUrl}
+                                    alt="Company logo"
+                                    className="w-full h-full object-cover"
+                                    width={100}
+                                    height={100}
+                                />
+                            </div>
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={handleRemoveAvatar}
+                            >
+                                <X className="w-4 h-4 mr-2" />
+                                Remove Logo
+                            </Button>
+                        </div>
+                    ) : (
+                        <UploadButton
+                            endpoint="imageUploader"
+                            onClientUploadComplete={(res) => {
+                                const profilePic = res[0];
+
+                                setValue("avatarUrl", profilePic.ufsUrl, {
+                                    shouldDirty: true,
+                                });
+                                console.log("Files: ", res);
+                            }}
+                            onUploadError={(error: Error) => {
+                                toast.error(`Upload failed: ${error.message}`);
+                            }}
+                        />
+                    )}
+
+
+                    <div className=" grid lg:grid-cols-[1fr_4fr] gap-6">
+                        {/* <Controller
+                            name="avatarUrl"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <div className="space-y-2">
+                                    <Label>Upload Logo *</Label>
+                                    <ImageUpload
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        boxText={
+                                            "A photo larger than 400 pixels works best. Max photo size 5 MB."
+                                        }
+                                        className={cn(
+                                            fieldState.error &&
+                                            "ring-1 ring-destructive/50 rounded-lg",
+                                            "h-64 w-64",
+                                        )}
+                                    />
+                                    {fieldState.error && (
+                                        <p className="text-sm text-destructive">
+                                            {fieldState.error.message}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        /> */}
+
+                        {/* <Controller
+                            name="bannerImageUrl"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <div className="space-y-2">
+                                    <Label>Banner Image</Label>
+                                    <ImageUpload
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        boxText={
+                                            "Banner images optimal dimension 1520×400. Supported format JPEG, PNG. Max photo size 5 MB."
+                                        }
+                                        className={cn(
+                                            fieldState.error &&
+                                            "ring-1 ring-destructive/50 rounded-lg",
+                                            "h-64 w-full",
+                                        )}
+                                    />
+                                    {fieldState.error && (
+                                        <p className="text-sm text-destructive">
+                                            {fieldState.error.message}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        /> */}
+
+                    </div>
                     {/* Company Name */}
                     <div className="space-y-3">
                         <Label htmlFor="companyName">Company Name</Label>
@@ -256,7 +361,7 @@ const EmployerSettingForm = ({ initialData }: Props) => {
                     {!isDirty && <p className="text-sm text-muted-foreground">No changes to save</p>}
                 </form>
             </CardContent>
-        </Card>
+        </Card >
     )
 }
 
