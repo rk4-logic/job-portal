@@ -1,4 +1,3 @@
-
 interface LoginFormData {
     email: string;
     password: string;
@@ -66,9 +65,20 @@ interface IFormInput {
     organizationType: OrganizationType;
     teamSize: TeamSize;
     avatarUrl: string;
-    // bannerImageUrl: string;
+    bannerImageUrl: string;
 }
 
 interface Props {
     initialData?: Partial<IFormInput>;
 }
+
+type ImageUploadProps = Omit<ComponentProps<"div">, "onChange"> & {
+  value?: string;
+  boxText?: string;
+  onChange: (url: string) => void;
+};
+
+interface JobPostFormProps {
+  initialData?: any; 
+  isEditMode?: boolean;
+};

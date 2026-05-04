@@ -18,7 +18,6 @@ import { usePathname } from "next/navigation";
 
 const base = "/employer-dashboard";
 
-// Swapped to Phosphor Icons for a fresh look
 const navigationItems = [
   { name: "Overview", icon: SquaresFourIcon, href: base + "/" },
   { name: "Applications", icon: UsersIcon, href: base + "/applications" },
@@ -33,7 +32,6 @@ const navigationItems = [
 const EmployerSidebar = () => {
   const pathname = usePathname();
 
-  // Optimized Active Link Logic
   const isActive = (href: string) => {
     if (href === base + "/" && pathname === base) return true;
     return pathname === href || pathname.startsWith(href + "/");

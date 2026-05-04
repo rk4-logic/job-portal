@@ -24,7 +24,7 @@ const EmployerSettings = async () => {
                     yearOfEstablishment:
                         employer.employerDetails.yearOfEstablishment?.toString(),
                     avatarUrl: employer.avatarUrl,
-                    // bannerImageUrl: employer.bannerImageUrl,
+                    bannerImageUrl: employer.employerDetails.bannerImageUrl,
                 } as EmployerProfileData
             }
                 />

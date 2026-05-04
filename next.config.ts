@@ -1,9 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    remotePatterns: [{ hostname: "we2plp04mq.ufs.sh", protocol: "https" }],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "s6ekf53f3c.ufs.sh", 
+      },
+      {
+        protocol: "https",
+        hostname: "we2plp04mq.ufs.sh", 
+      },
+      {
+        protocol: "https",
+        hostname: "s6ekf53f3c.ufs.sh", 
+      },
+    ],
   },
 };
 

@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from "@/config/db";
-import { employers } from "@/drizzle/schema";
+import { employers, users } from "@/drizzle/schema";
 import { getCurrentUser } from "@/features/auth/server/auth.queries";
 import { eq } from "drizzle-orm";
 
@@ -21,7 +21,7 @@ try {
       organizationType,
       teamSize,
       avatarUrl,
-      // bannerImageUrl,
+      bannerImageUrl,
     } = data;
 
     const updatedEmployer = await db
@@ -33,7 +33,7 @@ try {
         websiteUrl,
         organizationType,
         teamSize,
-        // bannerImageUrl,
+        bannerImageUrl,
         yearOfEstablishment: yearOfEstablishment
           ? parseInt(yearOfEstablishment)
           : null,
@@ -42,12 +42,12 @@ try {
 
     console.log("employers ", updatedEmployer);
 
-    // await db
-    //   .update(users)
-    //   .set({
-    //     avatarUrl,
-    //   })
-    //   .where(eq(users.id, currentUser.id));
+    await db
+      .update(users)
+      .set({
+        avatarUrl,
+      })
+      .where(eq(users.id, currentUser.id));
 
     return { status: "SUCCESS", message: "Profile updated successfully" };
   } catch (error) {
