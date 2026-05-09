@@ -95,7 +95,7 @@ export const jobs = mysqlTable("jobs",{
   expiresAt: date("expires_at"),
   deletedAt: timestamp("deleted_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updateAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
 });
 
 

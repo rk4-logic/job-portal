@@ -21,8 +21,8 @@ const base = "/employer-dashboard";
 const navigationItems = [
   { name: "Overview", icon: SquaresFourIcon, href: base + "/" },
   { name: "Applications", icon: UsersIcon, href: base + "/applications" },
-  { name: "Post a Job", icon: PlusCircleIcon, href: base + "/jobs/create" },
-  { name: "My Jobs", icon: BriefcaseIcon, href: base + "/jobs" },
+  { name: "Post a Job", icon: PlusCircleIcon, href: base + "/jobs" },
+  { name: "My Jobs", icon: BriefcaseIcon, href: base + "/jobslist" },
   { name: "Saved Candidates", icon: BookmarkSimpleIcon, href: base + "/saved" },
   { name: "Plans & Billing", icon: CreditCardIcon, href: base + "/billing" },
   { name: "Companies", icon: BuildingsIcon, href: base + "/companies" },

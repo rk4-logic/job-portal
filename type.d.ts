@@ -1,3 +1,9 @@
+import {
+  JOB_LEVEL, JOB_TYPE, MIN_EDUCATION, SALARY_CURRENCY, SALARY_PERIOD, WORK_TYPE,} from "@/config/constants";
+
+export {};
+
+declare global {
 interface LoginFormData {
     email: string;
     password: string;
@@ -82,3 +88,43 @@ interface JobPostFormProps {
   initialData?: any; 
   isEditMode?: boolean;
 };
+
+type WorkType = (typeof WORK_TYPE)[number];
+type JobLevel = (typeof JOB_LEVEL)[number];
+type JobType = (typeof JOB_TYPE)[number];
+type SalaryCurrency = (typeof SALARY_CURRENCY)[number];
+type SalaryPeriod = (typeof SALARY_PERIOD)[number];
+type MinEducation = (typeof MIN_EDUCATION)[number];
+
+interface Job {
+  id: number;
+  title: string;
+  description: string;
+  employerId: number;
+  isFeatured: Boolean;
+  jobType: JobType;
+  workType: WorkType;
+  jobLevel: JobLevel;
+
+  location: string | null;
+  tags: string | null;
+
+  minSalary: number | null;
+  maxSalary: number | null;
+  salaryCurrency: SalaryCurrency | null;
+  salaryPeriod: SalaryPeriod | null;
+
+  minEducation: MinEducation | null;
+  experience: string | null;
+
+  expiresAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date | null;
+};
+
+interface JobCardProps {
+  job: Job;
+  onEdit?: (jobId: number) => void;
+  onDelete?: (jobId: number) => void;
+};
+}
