@@ -50,7 +50,7 @@ export const EmployerJobLists = () => {
     }, [jobs.length]);
 
     const handleEdit = async (jobId: number) => {
-        router.push(`/employer-dashboard/jobs/${jobId}/edit`);
+        router.push(`/employer-dashboard/jobslist/${jobId}/edit`);
     };
 
     const handleDelete = async (jobId: number) => {

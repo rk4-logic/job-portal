@@ -127,4 +127,8 @@ interface JobCardProps {
   onEdit?: (jobId: number) => void;
   onDelete?: (jobId: number) => void;
 };
+
+interface EditJobPageProps {
+  params: Promise<{ jobId: string }>;
+}
 }

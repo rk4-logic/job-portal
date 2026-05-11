@@ -29,7 +29,7 @@ import Tiptap from "@/components/text-editor";
 import { JobFormData, jobSchema } from "../jobs/jobs.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { createJobAction } from "../server/jobs.action";
+import { createJobAction, updateJobAction } from "../server/jobs.action";
 import { useRouter } from "next/navigation";
 import { JOB_LEVEL, JOB_TYPE, MIN_EDUCATION, SALARY_CURRENCY, SALARY_PERIOD, WORK_TYPE } from "@/config/constants";
 
@@ -78,19 +78,19 @@ export const JobForm = ({
 
   const handleFormSubmit = async (data: JobFormData) => {
     try {
-    //   let response;
-    //   if (isEditMode && initialData) {
-    //     // --- UPDATE FLOW ---
-    //     response = await updateJobAction(initialData.id, data);
-    //   } else {
-    //     // --- CREATE FLOW ---
-    //     response = await createJobAction(data);
-    //   }
-      const response = await createJobAction(data);
+      let response;
+      if (isEditMode && initialData) {
+        //update Job
+        response = await updateJobAction(initialData.id, data);
+      } else {
+        //Create Job
+        response = await createJobAction(data);
+      }
+      // const response = await createJobAction(data);
       if (response.status === "SUCCESS") {
         toast.success(response.message);
         router.push("/employer-dashboard/jobs");
-        // router.refresh(); // Ensure the list page shows new data
+        // router.refresh();
       } else toast.error(response.message);
     } catch (error) {
       toast.error("Something went wrong");

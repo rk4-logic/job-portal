@@ -80,45 +80,45 @@ export const deleteJobAction = async (jobId: number) => {
   }
 };
 
-// export const getJobByIdAction = async (jobId: number) => {
-//   try {
-//     const currentUser = await getCurrentUser();
-//     if (!currentUser) return { status: "ERROR", message: "Unauthorized" };
+export const getJobByIdAction = async (jobId: number) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) return { status: "ERROR", message: "Unauthorized" };
 
-//     const [job] = await db
-//       .select()
-//       .from(jobs)
-//       .where(and(eq(jobs.id, jobId), eq(jobs.employerId, currentUser.id)))
-//       .limit(1);
+    const [job] = await db
+      .select()
+      .from(jobs)
+      .where(and(eq(jobs.id, jobId), eq(jobs.employerId, currentUser.id)))
+      .limit(1);
 
-//     if (!job) {
-//       return { status: "ERROR", message: "Job not found" };
-//     }
+    if (!job) {
+      return { status: "ERROR", message: "Job not found" };
+    }
 
-//     return { status: "SUCCESS", data: job };
-//   } catch (error) {
-//     return { status: "ERROR", message: "Failed to fetch job details" };
-//   }
-// };
+    return { status: "SUCCESS", data: job };
+  } catch (error) {
+    return { status: "ERROR", message: "Failed to fetch job details" };
+  }
+};
 
-// export const updateJobAction = async (jobId: number, values: any) => {
-//   try {
-//     const currentUser = await getCurrentUser();
+export const updateJobAction = async (jobId: number, values: any) => {
+  try {
+    const currentUser = await getCurrentUser();
 
-//     if (!currentUser || currentUser.role !== "employer") {
-//       return { status: "ERROR", message: "Unauthorized" };
-//     }
+    if (!currentUser || currentUser.role !== "employer") {
+      return { status: "ERROR", message: "Unauthorized" };
+    }
 
-//     await db
-//       .update(jobs)
-//       .set({
-//         ...values,
-//         updatedAt: new Date(),
-//       })
-//       .where(and(eq(jobs.id, jobId), eq(jobs.employerId, currentUser.id)));
+    await db
+      .update(jobs)
+      .set({
+        ...values,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(jobs.id, jobId), eq(jobs.employerId, currentUser.id)));
 
-//     return { status: "SUCCESS", message: "Job updated successfully" };
-//   } catch (error) {
-//     return { status: "ERROR", message: "Failed to update job" };
-//   }
-// };
+    return { status: "SUCCESS", message: "Job updated successfully" };
+  } catch (error) {
+    return { status: "ERROR", message: "Failed to update job" };
+  }
+};
