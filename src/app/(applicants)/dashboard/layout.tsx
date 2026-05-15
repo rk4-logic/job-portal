@@ -16,7 +16,7 @@ export default async function DashboardLayout({
   return (
     <div className="grid md:grid-cols-[260px_1fr] min-h-screen bg-background">
       <ApplicantSidebar />
-      <main className="p-8 w-full max-w-7xl mx-auto">{children}</main>
+      <main className="p-2 w-full max-w-7xl mx-auto">{children}</main>
     </div>
   );
 }

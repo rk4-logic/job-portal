@@ -131,4 +131,22 @@ interface JobCardProps {
 interface EditJobPageProps {
   params: Promise<{ jobId: string }>;
 }
+
+interface JobFilterParams {
+  search?: string;
+  jobType?: string;
+  jobLevel?: string;
+  workType?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface JobPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+interface EditJobPageProps {
+  params: Promise<{ jobId: string }>;
+}
+
 }

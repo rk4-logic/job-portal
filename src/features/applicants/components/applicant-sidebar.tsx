@@ -23,7 +23,7 @@ const navigationItems = [
   { name: "My Applications", icon: BriefcaseMetalIcon, href: base + "/applications" },
   { name: "Saved Jobs", icon: BookmarkSimpleIcon, href: base + "/saved" },
   { name: "My Resume", icon: FileTextIcon, href: base + "/resume" },
-  { name: "Job Alerts", icon: BellRingingIcon, href: base + "/alerts" },
+  // { name: "Job Alerts", icon: BellRingingIcon, href: base + "/alerts" },
   { name: "Career Stats", icon: ChartLineUpIcon, href: base + "/stats" },
 ];
 
@@ -89,7 +89,7 @@ const EmployeeSidebar = () => {
           );
         })}
 
-        <div className="pt-6">
+        <div className="pt-4">
           <p className="px-4 text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Account</p>
           {bottomItems.map((item) => {
              const active = isActive(item.href);
@@ -112,7 +112,7 @@ const EmployeeSidebar = () => {
       </nav>
 
       {/* Profile Card / Sign Out */}
-      <div className="p-4 border-t border-slate-50">
+      <div className="px-4 py-1 border-t border-slate-50">
         <div className="bg-slate-50 rounded-2xl p-3 mb-3 flex items-center gap-3">
           <div className="h-10 w-10 rounded-full bg-slate-200 overflow-hidden">
              {/* Replace with actual user image */}
@@ -126,7 +126,7 @@ const EmployeeSidebar = () => {
         
         <button
           onClick={() => logoutUserAction()}
-          className="flex items-center gap-3 w-full px-4 py-3 text-sm font-semibold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
+          className="flex items-center gap-3 w-full px-4 py-2 text-sm font-semibold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
         >
           <SignOutIcon size={20} />
           Sign Out
