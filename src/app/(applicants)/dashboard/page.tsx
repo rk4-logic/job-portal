@@ -1,4 +1,6 @@
+import { ApplicantProfileStatus } from "@/features/applicants/components/applicant-profile-stats";
 import { ApplicantStats } from "@/features/applicants/components/applicants-stats";
+import { RecentApplications } from "@/features/applicants/components/recent-applications";
 import { getCurrentUser } from "@/features/auth/server/auth.queries"
 import { redirect } from "next/navigation";
 
@@ -18,7 +20,9 @@ const ApplicantDashboard = async () => {
         </p>
       </div>
 
+      <ApplicantProfileStatus />
       <ApplicantStats />
+      <RecentApplications /> 
     </div>
   )
 }

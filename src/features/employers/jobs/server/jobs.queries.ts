@@ -129,5 +129,4 @@ export async function getJobById(jobId: number) {
   return job[0];
 }
 
-// 🪄 Create the Type for the Details Page
 export type JobDetailsType = Awaited<ReturnType<typeof getJobById>>;

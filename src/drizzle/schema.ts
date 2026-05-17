@@ -98,8 +98,75 @@ export const jobs = mysqlTable("jobs",{
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
 });
 
+export const resumes = mysqlTable("resumes", {
+  id: int("id").autoincrement().primaryKey(),
+  applicantId: int("applicant_id")
+    .notNull()
+    .references(() => applicants.id, { onDelete: "cascade" }),
+
+  fileUrl: text("file_url").notNull(), // The UploadThing URL
+  fileName: varchar("file_name", { length: 255 }).notNull(),
+
+  fileSize: int("file_size"),
+  isPrimary: boolean("is_primary").default(false),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export const jobApplications = mysqlTable("job_applications", {
+  id: int("id").autoincrement().primaryKey(),
+
+  jobId: int("job_id")
+    .notNull()
+    .references(() => jobs.id, { onDelete: "cascade" }),
+
+  applicantId: int("applicant_id")
+    .notNull()
+    .references(() => applicants.id, { onDelete: "cascade" }),
+
+  resumeId: int("resume_id")
+    .notNull()
+    .references(() => resumes.id, { onDelete: "restrict" }), // They can't delete a resume if it's used in an application
+
+  coverLetter: text("cover_letter"),
+
+  // You can add a status enum later if you want employers to "accept/reject"
+  // status: mysqlEnum("status", ["pending", "reviewed", "rejected"]).default("pending"),
+  appliedAt: timestamp("applied_at").defaultNow().notNull(),
+});
+
 
 // Relationships
+
+export const jobApplicationsRelations = relations(
+  jobApplications,
+  ({ one }) => ({
+    job: one(jobs, {
+      fields: [jobApplications.jobId],
+      references: [jobs.id],
+    }),
+    applicant: one(applicants, {
+      fields: [jobApplications.applicantId],
+      references: [applicants.id],
+    }),
+    resume: one(resumes, {
+      fields: [jobApplications.resumeId],
+      references: [resumes.id],
+    }),
+  }),
+);
+
+export const resumesRelations = relations(resumes, ({ one }) => ({
+  applicant: one(applicants, {
+    fields: [resumes.applicantId],
+    references: [applicants.id],
+  }),
+}));
+
+export const applicantsRelations = relations(applicants, ({ many }) => ({
+  resumes: many(resumes),
+}));
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   employer: one(employers, {

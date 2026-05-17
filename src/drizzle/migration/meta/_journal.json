@@ -36,6 +36,13 @@
       "when": 1777528091594,
       "tag": "0004_furry_starjammers",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1778994249453,
+      "tag": "0005_violet_prism",
+      "breakpoints": true
     }
   ]
 }
