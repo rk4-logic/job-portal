@@ -127,12 +127,9 @@ export const jobApplications = mysqlTable("job_applications", {
 
   resumeId: int("resume_id")
     .notNull()
-    .references(() => resumes.id, { onDelete: "restrict" }), // They can't delete a resume if it's used in an application
+    .references(() => resumes.id, { onDelete: "restrict" }), 
 
   coverLetter: text("cover_letter"),
-
-  // You can add a status enum later if you want employers to "accept/reject"
-  // status: mysqlEnum("status", ["pending", "reviewed", "rejected"]).default("pending"),
   appliedAt: timestamp("applied_at").defaultNow().notNull(),
 });
 

@@ -149,4 +149,17 @@ interface EditJobPageProps {
   params: Promise<{ jobId: string }>;
 }
 
+interface ResumeUploadProps {
+  value?: string;
+  onChange: (url: string, fileName: string, fileSize: number) => void;
+  className?: string;
+}
+
+interface ApplyJobModalProps {
+  jobId: number;
+  jobTitle: string;
+  hasApplied: boolean;
+  resumes: { id: number; fileName: string }[];
+}
+
 }

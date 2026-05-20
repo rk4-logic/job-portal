@@ -66,7 +66,7 @@ const ApplicantSettingsForm = ({ initialData }: ApplicantSettingsFormProps) => {
     },
   });
 
-  const isUpdating = !!initialData?.location; 
+  const isUpdating = !!initialData?.location;
 
   const onSubmit = async (data: ApplicantSettingsSchema) => {
     console.log("Saving Data:", data);
@@ -463,7 +463,6 @@ const ApplicantSettingsForm = ({ initialData }: ApplicantSettingsFormProps) => {
         <div className="flex items-center gap-4">
           <Button
             type="submit"
-            // Disable the button if submitting OR if the user hasn't changed any fields
             disabled={isSubmitting || !isDirty}
             className="min-w-[150px]"
           >

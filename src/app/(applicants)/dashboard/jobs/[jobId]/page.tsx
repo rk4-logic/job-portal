@@ -1,6 +1,11 @@
 import Tiptap from "@/components/text-editor";
 import { Button } from "@/components/ui/button";
+import { db } from "@/config/db";
+import { jobApplications, resumes } from "@/drizzle/schema";
+import { ApplyJobModal } from "@/features/applicants/components/apply-job-modal";
+import { getCurrentUser } from "@/features/auth/server/auth.queries";
 import { getJobById } from "@/features/employers/jobs/server/jobs.queries";
+import { and, eq } from "drizzle-orm";
 import { ArrowLeft, Badge, Bookmark, Clock, Globe, MapPin, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,6 +21,30 @@ const JobDetailPage = async ({ params }: EditJobPageProps) => {
 
     if (!jobdetails) return notFound();
 
+    const user = await getCurrentUser();
+    let hasApplied = false;
+    let userResumes: { id: number; fileName: string }[] = [];
+
+    if (user) {
+        const existingApplication = await db
+            .select()
+            .from(jobApplications)
+            .where(
+                and(
+                    eq(jobApplications.jobId, jobId),
+                    eq(jobApplications.applicantId, user.id),
+                ),
+            )
+            .limit(1);
+
+        hasApplied = existingApplication.length > 0;
+
+        userResumes = await db
+            .select({ id: resumes.id, fileName: resumes.fileName })
+            .from(resumes)
+            .where(eq(resumes.applicantId, user.id));
+    }
+
     const tagList = jobdetails.tags ? jobdetails.tags.split(",").map(t => t.trim()).filter(t => t !== "") : [];
 
     return (
@@ -29,14 +58,12 @@ const JobDetailPage = async ({ params }: EditJobPageProps) => {
                         </div>
                         Back to Job Board
                     </Link>
-                    <div className="flex items-center gap-3">
-                        <Button variant="outline" size="sm" className="hidden border-slate-200 sm:flex">
-                            <Bookmark className="mr-2 h-4 w-4" /> Save
-                        </Button>
-                        <Button className="bg-blue-600 font-bold shadow-lg shadow-blue-200 hover:bg-blue-700">
-                            Apply for this Position
-                        </Button>
-                    </div>
+                    <ApplyJobModal 
+                    jobId = {jobId}
+                    jobTitle = {jobdetails.title}
+                    hasApplied = {hasApplied}
+                    resumes = {userResumes}
+                    />
                 </div>
             </nav>
 
@@ -121,7 +148,7 @@ const JobDetailPage = async ({ params }: EditJobPageProps) => {
                                 {/* This wrapper ensures long words break and wide content doesn't spill out */}
                                 <div className="h-auto w-full overflow-x-auto overflow-wrap-anywhere">
                                     <article
-                                        className="prose prose-slate max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-img:rounded-2xl break-words" 
+                                        className="prose prose-slate max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-img:rounded-2xl break-words"
                                         dangerouslySetInnerHTML={{ __html: jobdetails.description ?? "No description available." }}
                                     />
                                 </div>

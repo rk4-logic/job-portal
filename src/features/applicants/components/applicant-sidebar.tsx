@@ -2,14 +2,14 @@
 
 import { logoutUserAction } from "@/features/auth/server/auth.actions ";
 import { cn } from "@/lib/utils";
-import { 
-  MagnifyingGlassIcon, 
-  BriefcaseMetalIcon, 
-  UserCircleIcon, 
-  BookmarkSimpleIcon, 
-  BellRingingIcon, 
-  FileTextIcon, 
-  GearIcon, 
+import {
+  MagnifyingGlassIcon,
+  BriefcaseMetalIcon,
+  UserCircleIcon,
+  BookmarkSimpleIcon,
+  BellRingingIcon,
+  FileTextIcon,
+  GearIcon,
   SignOutIcon,
   ChartLineUpIcon
 } from "@phosphor-icons/react";
@@ -42,16 +42,17 @@ const EmployeeSidebar = () => {
 
   return (
     <aside className="w-64 flex flex-col bg-white border-r border-slate-100 h-screen sticky top-0">
-      {/* Brand Section - Softer Blue for Employees */}
       <div className="p-6">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
-            <MagnifyingGlassIcon size={22} weight="bold" className="text-white" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold leading-none text-slate-900">Job Portal<span className="text-indigo-600">{" "}Pro</span></span>
-            <span className="text-[10px] font-medium text-slate-400 mt-1 uppercase tracking-tighter">Candidate Portal</span>
-          </div>
+        <div className="mb-1">
+          <Link href={base} className="flex items-center gap-3">
+            <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+              <MagnifyingGlassIcon size={22} weight="bold" className="text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-bold leading-none text-slate-900">Job Portal<span className="text-indigo-600">{" "}Pro</span></span>
+              <span className="text-[10px] font-medium text-slate-400 mt-1 uppercase tracking-tighter">Candidate Portal</span>
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -73,9 +74,9 @@ const EmployeeSidebar = () => {
                   : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
               )}
             >
-              <Icon 
-                size={22} 
-                weight={active ? "fill" : "regular"} 
+              <Icon
+                size={22}
+                weight={active ? "fill" : "regular"}
                 className={cn(
                   "transition-colors",
                   active ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"
@@ -92,9 +93,9 @@ const EmployeeSidebar = () => {
         <div className="pt-4">
           <p className="px-4 text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Account</p>
           {bottomItems.map((item) => {
-             const active = isActive(item.href);
-             const Icon = item.icon;
-             return (
+            const active = isActive(item.href);
+            const Icon = item.icon;
+            return (
               <Link
                 key={item.name}
                 href={item.href}
@@ -106,7 +107,7 @@ const EmployeeSidebar = () => {
                 <Icon size={22} weight={active ? "fill" : "regular"} />
                 {item.name}
               </Link>
-             )
+            )
           })}
         </div>
       </nav>
@@ -115,15 +116,15 @@ const EmployeeSidebar = () => {
       <div className="px-4 py-1 border-t border-slate-50">
         <div className="bg-slate-50 rounded-2xl p-3 mb-3 flex items-center gap-3">
           <div className="h-10 w-10 rounded-full bg-slate-200 overflow-hidden">
-             {/* Replace with actual user image */}
-             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="avatar" />
+            {/* Replace with actual user image */}
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="avatar" />
           </div>
           <div className="flex flex-col overflow-hidden">
             <span className="text-sm font-bold text-slate-900 truncate">Alex Rivera</span>
             <span className="text-[11px] text-slate-500 truncate">Pro Member</span>
           </div>
         </div>
-        
+
         <button
           onClick={() => logoutUserAction()}
           className="flex items-center gap-3 w-full px-4 py-2 text-sm font-semibold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"

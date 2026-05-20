@@ -6,11 +6,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 
-interface ResumeUploadProps {
-  value?: string;
-  onChange: (url: string, fileName: string, fileSize: number) => void;
-  className?: string;
-}
 
 export const ResumeUpload = ({
   value,
